@@ -2,7 +2,7 @@
 #include "number_classifier.hpp"
 
 int main(){
-    cv::Mat image = cv::imread("/media/chen/Data/programme/Visual/SummerStudy/pnp/detect/0.jpg");
+    cv::Mat image = cv::imread("img/0.jpg");
     
     //将图片写入vector
     std::vector<cv::Mat> images;

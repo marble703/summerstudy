@@ -2,7 +2,7 @@
 #include <vector>
 
 int main() {
-    cv::Mat image = cv::imread("/media/chen/Data/programme/Visual/SummerStudy/pnp/detect/20.jpg");
+    cv::Mat image = cv::imread("/img/20.jpg");
     if (image.empty()) {
         std::cerr << "Failed to read image." << std::endl;
         return -1;

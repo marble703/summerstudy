@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-#include"Pose_dist.hpp"
+#include"include/Pose_dist.hpp"
 
 int main(int argc, char** argv){
     Quaternion a(1,2,3,4);

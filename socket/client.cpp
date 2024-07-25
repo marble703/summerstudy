@@ -5,8 +5,8 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <vector>
-#include "MessageBuffer.hpp"
-#include "Message.hpp"
+#include "include/MessageBuffer.hpp"
+#include "include/Message.hpp"
 
 
 const char* serverIP = "10.2.20.66";
