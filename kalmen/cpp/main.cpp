@@ -270,8 +270,8 @@ int main(){
 	Eigen::MatrixXd X0;
 	std::string input_file; std::string output_file; 
 
-	input_file = "/media/chen/Data/programme/Visual/SummerStudy/kalmen/source/homework_data_4_.txt";
-	output_file = "/media/chen/Data/programme/Visual/SummerStudy/kalmen/cpp/output/homework_data_1_output.txt";
+	input_file = "/source/homework_data_4_.txt";
+	output_file = "/output/homework_data_1_output.txt";
 
 	std::ifstream file(input_file); // 打开文件
 	std::string line;
