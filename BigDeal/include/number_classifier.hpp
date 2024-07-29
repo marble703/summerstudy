@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Armor.hpp"
+#include "../include/Armor.hpp"
 
 namespace armor
 {

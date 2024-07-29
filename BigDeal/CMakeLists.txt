@@ -12,7 +12,20 @@ include_directories(
     ${EIGEN3_INCLUDE_DIR}
 )
 
-add_executable(cv main.cpp src/number_classifier.cpp src/KalmanFilter.cpp)
+add_executable(cv
+
+               main.cpp
+               src/ImagePreprocesser.cpp
+               src/KalmanFilter.cpp
+               src/Armor.cpp
+               src/Detect.cpp
+               src/number_classifier.cpp
+
+               include/ImagePreprocesser.hpp
+               include/KalmanFilter.hpp
+               include/Armor.hpp
+               include/Detect.hpp
+               include/number_classifier.hpp)
 
 
 

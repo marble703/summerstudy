@@ -2,8 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Armor.hpp"
-#include "number_classifier.hpp"
+#include "../include/number_classifier.hpp"
 
 namespace armor
 {
