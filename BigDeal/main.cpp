@@ -15,19 +15,23 @@ int main(){
     capture.open("/media/chen/Data/programme/Visual/SummerStudy/BigDeal/source/7月14日.mp4");
 
         while (capture.read(frame)) {
-        std::cout<< "frame start" <<frame_time.size()<< std::endl;
-        auto start = std::chrono::system_clock::now();
-        cv::Mat image = frame;
-        Detect detector(frame);
-        // 输入true单帧播放
-        detector.detect(true, true);
-        cv::imshow("frame", frame);
-        std::cout << "\nframe finish\n\n\n" << std::endl;
-        auto end = std::chrono::system_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); 
-        std::cout <<"frame time: "<< duration << std::endl;
-        frame_time.push_back(duration);
-        cv::waitKey(1);
+            std::cout<< "frame start" <<frame_time.size()<< std::endl;
+            auto start = std::chrono::system_clock::now();
+
+
+            cv::Mat image = frame;
+            Detect detector(frame);
+            // 输入true单帧播放;输入true显示图像
+            detector.detect(false, true);
+            cv::imshow("frame", frame);
+
+
+            std::cout << "\nframe finish\n\n\n" << std::endl;
+            auto end = std::chrono::system_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); 
+            std::cout <<"frame time: "<< duration << std::endl;
+            frame_time.push_back(duration);
+            cv::waitKey(1);
         }
 
         double frame_time_t = 0;

@@ -98,12 +98,11 @@ int Detect::detect(bool wait, bool show){
     // 将灯条从左到右排序并组合，基于每四个点的x坐标平均值
     for (int i = 0; i < rectPointsVec.size() / 4 - 1; i++) {
         for (int j = i + 1; j < rectPointsVec.size() / 4; j++) {
-            // 计算第i组的x坐标平均值
+            // 计算每组x坐标平均值
             float avgX_i = (rectPointsVec[i * 4].x + rectPointsVec[i * 4 + 1].x + rectPointsVec[i * 4 + 2].x + rectPointsVec[i * 4 + 3].x) / 4;
-            // 计算第j组的x坐标平均值
             float avgX_j = (rectPointsVec[j * 4].x + rectPointsVec[j * 4 + 1].x + rectPointsVec[j * 4 + 2].x + rectPointsVec[j * 4 + 3].x) / 4;
 
-            // 如果第i组的平均x坐标大于第j组的，交换这两组，同时交换角度
+            // 交换灯条，同时交换角度(面积等后面用不到，所以这里没交换)
             if (avgX_i > avgX_j) {
                 for (int k = 0; k < 4; k++) {
                     cv::Point2f temp = rectPointsVec[i * 4 + k];
@@ -165,8 +164,7 @@ int Detect::detect(bool wait, bool show){
                 p4 = (temp_points[4] + temp_points[7]) / 2;
             }
 
-
-            //判断条件：装甲板宽度高比1.5到3，
+            //判断条件：装甲板宽度高比1.5到3
             if (abs(p3.x - p1.x) / abs(p2.y - p1.y) > 1 && abs(p3.x - p1.x) / abs(p2.y - p1.y) < 3){
                 points.push_back(p1);
                 points.push_back(p2);
@@ -199,22 +197,20 @@ int Detect::detect(bool wait, bool show){
         armors_copy.push_back(armors[i]);
 
         number_classifier.ExtractNumbers(origin_image, armors_copy);
-
         number_classifier.Classify(armors_copy);
 
         points = points_comb[i];
 
-        if (armors_copy[0].classification_result.find("negative")){
+        if (armors_copy[0].classification_result.find("negative")) {
+            std::cout << "classification_result0: " << armors_copy[0].classification_result << std::endl;
             find = 1;
 
             if(show){
-                draw_lines_numbers(points, armors_copy);
+                draw_lines_numbers(points, armors_copy[0].classification_result);
+
                 std::cout << "armors"<< i << " classification_result: " << armors_copy[0].classification_result << std::endl;
                 std::cout << "armors"<< i << " classification_confidence: " << armors_copy[0].classification_confidence << std::endl;
-                
             }
-
-
         }
         else {
             find = 0;
@@ -226,18 +222,30 @@ int Detect::detect(bool wait, bool show){
     return 0;
 }
 
-void Detect::draw_lines_numbers(std::vector<cv::Point2f> points, std::vector<Armor> armors){
+void Detect::draw_lines_numbers(std::vector<cv::Point2f> points, std::string classification_result){
 
     cv::Point2f number_position = (points[0] + points[1] + points[2] + points[3]) / 4;
     // 绘制边界点
     for (int i = 0; i < points.size(); i++) {
         cv::circle(image, points[i], 5, cv::Scalar(0,0,255), -1);
     }
+    std::cout << "classification_result: " << classification_result << std::endl;
 
     //连接对角线
     cv::line(image, points[1], points[2], cv::Scalar(255,0,0), 2);
     cv::line(image, points[0], points[3], cv::Scalar(255,0,0), 2);
+    std::cout << "classification_result: " << classification_result << std::endl;
+
+
 
     //在image上显示数字
-    cv::putText(image, armors[0].classification_result, number_position, cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
+    cv::putText(image, classification_result, number_position, cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
+}
+
+bool Detect::get_find(){
+    return find;
+}
+
+std::vector<cv::Point2f> Detect::get_points(){
+    return points;
 }
